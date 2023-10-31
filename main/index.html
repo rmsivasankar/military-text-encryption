@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Secret Code Encryption</title>
+  <style>
+    /* CSS styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      background-image: url(red.jpg);
+      background-size: cover;
+    }
+    .container {
+      background-color: #000000;
+      border: 2px;
+      border-color: red;
+      border-style: solid;
+      opacity: 70%;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+    input {
+      padding: 8px;
+      margin-bottom: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #ffffff;
+      color: rgb(0, 0, 0);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #73ff7a;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Secret code Encryption</h1>
+    <label for="secret_message">Enter the secret message:</label>
+    <input type="text" id="secret_message">
+    <label for="secret_code">Enter the secret code:</label>
+    <input type="text" id="secret_code">
+    <button onclick="encrypt()">Encrypt</button>
+    <p>Cipher Text: <span id="cipher_text"></span></p>
+
+    <script>
+      function caesarCipher(text, shift) {
+        let encryptedText = "";
+
+        for (let i = 0; i < text.length; i++) {
+          let char = text[i];
+          if (char.match(/[a-zA-Z]/)) {
+            let code = text.charCodeAt(i);
+            if (code >= 65 && code <= 90) {
+              char = String.fromCharCode(((code - 65 + shift) % 26) + 65);
+            } else if (code >= 97 && code <= 122) {
+              char = String.fromCharCode(((code - 97 + shift) % 26) + 97);
+            }
+          }
+          encryptedText += char;
+        }
+
+        return encryptedText;
+      }
+
+      function encrypt() {
+        let secretMessage = document.getElementById("secret_message").value;
+        let secretCode = document.getElementById("secret_code").value;
+        let plaintext = secretMessage + secretCode;
+        let shift = 3;
+        let cipherText = caesarCipher(plaintext, shift);
+
+        document.getElementById("cipher_text").innerText = cipherText;
+      }
+    </script>
+  </div>
+</body>
+</html>
